@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from .models import ProfileLink
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -21,13 +22,13 @@ class RegisterForm(UserCreationForm):
     password1 = forms.CharField(
         label='Hasło',
         max_length=150,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
     password2 = forms.CharField(
         label='Potwórz hasło',
         max_length=150,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
     class Meta:
@@ -39,11 +40,9 @@ class RegisterForm(UserCreationForm):
         #     "password1": "Haslo",
         #     "password2": "Potwierdz haslo"
         # }
-#
-# def LoginForm(request):
-#     if request.method == 'POST':
-#         form = AuthenticationForm()
-#     else:
-#         form = AuthenticationForm()
-#
-#     return render(request,'registration/login.html', {'form': form})
+
+
+class AddProfile(forms.ModelForm):
+    class Meta:
+        model = ProfileLink
+        fields = ["application", "link"]
