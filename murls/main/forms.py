@@ -34,15 +34,23 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
-        # labels = {
-        #     "username": "Twój login",
-        #     "email": "Email",
-        #     "password1": "Haslo",
-        #     "password2": "Potwierdz haslo"
-        # }
-
 
 class AddProfile(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['link'].widget.attrs.update({'class': 'form-control custom-input'})
+        self.fields['application'].widget.attrs.update({'class': 'form-control custom-input'})
+
+    application = forms.CharField(
+        label='Tytuł',
+        max_length=40,
+    )
+
+    link = forms.URLField(
+        label='Link do profilu',
+        max_length=200,
+        error_messages={'required': 'Please let us know what to call you!'}
+    )
     class Meta:
         model = ProfileLink
         fields = ["application", "link"]

@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{% username %}}</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
 
-</body>
-</html>
+<div class="container">
+    {% if user_links|length > 0 %}
+    <h1 class="text-center">{{ user_login }}</h1>
+    {% endif %}
+
+    {% for link in user_links %}
+    <div class="container-fluid d-flex aligns-items-center ">
+        <div class="card mt-3 animate__animated animate__bounceInLeft" style="width: 18rem;">
+    <div class="card-header">
+        {{link.application}}
+    </div>
+    <div class="card-body">
+        <a href="{{link.link}}" target="_blank">{{link.link}}</a>
+    </div>
+</div>
+{% endfor %}
+
+    {% if user_links|length < 1 %}
+    <h2 class="text-center">@{{ user_login }} nie dodał jeszcze żadnych kont</h2>
+    {% endif %}
+</div>
+    </div>
+
+{% endblock %}

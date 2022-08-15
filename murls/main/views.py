@@ -4,17 +4,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ProfileLink
-from django.http import HttpResponse
+
 
 # Create your views here.
 
 def home(request):
-    # links = ProfileLink.objects.all()
-    #links = ProfileLink.objects.filter(id=1).values()
-    #links = ProfileLink.objects.all()
     links = ProfileLink.objects.filter(owner=request.user.id)
 
-    if request.method=='POST':
+    if request.method == 'POST':
         link_id = request.POST.get("link-id")
         link = ProfileLink.objects.filter(id=link_id).first()
 
@@ -51,7 +48,10 @@ def add_link(request):
 
     return render(request, 'main/add_profile.html', {"form": form})
 
-def user_profile():
 
-    return HttpResponse("<h1>Profil usera</h1>")
-    # return render(request, 'main/user_profile.html')
+def ShowProfilePage(request, username):
+        user_login = User.objects.get(username=username)
+        user_n = User.objects.filter(username=username).first()
+        user_id = user_n.id
+        user_links = ProfileLink.objects.filter(owner=user_id)
+        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links})

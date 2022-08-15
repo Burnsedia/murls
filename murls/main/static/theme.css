@@ -1,5 +1,5 @@
 body{
-background-color: rgb(189, 189, 189)
+background-color: rgb(255, 236, 179);
 }
 
 .navbar{
@@ -13,4 +13,12 @@ padding-top: 5vh;
 
 .delete-link{
 float: right;
+}
+
+.custom-input{
+width: 300px;
+}
+
+.add-profiles-form{
+
 }

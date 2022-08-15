@@ -1,7 +1,42 @@
 {% extends 'main/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<h1>Dzień dobry, {{user}}</h1>
+<!--<h1>Dzień dobry, {{user}}</h1>-->
+{% if links|length > 0 %}
+<h3>Twoje konta:</h3>
+{% else %}
+<div class="container-fluid">
+        <p class="lead text-center animate__animated animate__backInLeft">
+        {% load static %}
+        <img class="img-responsive mx-auto d-block" src="{% static 'undraw_no_data_re_kwbl.svg' %}" alt="No data image" width="350"><br>
+        <h2 class="text-center">Na razie nic tutaj nie ma. Kliknij przycisk i dodaj pierwszy link!</h2><br><br>
+    <div class="d-flex justify-content-center">
+            <a class="btn btn-info btn-lg" href="/add-profile" role="button">Dodaj link</a>
+    </div>
+
+</div>
+
 {% endif %}
 
+{% for link in links %}
+<div class="card mt-3 animate__animated animate__bounceInLeft">
+    <div class="card-header">
+        {{link.application}}
+    </div>
+    <div class="card-body">
+        <a href="{{link.link}}" target="_blank">{{link.link}}</a>
+        <div class="float-right">
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger delete-link" name="link-id" value="{{link.id}}">Usuń</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endif %}
+
+
 {% endblock %}
+
