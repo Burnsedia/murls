@@ -1,16 +1,16 @@
 {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<h1>Zaloguj się</h1>
 <div class="container login-form">
   <div class="row justify-content-center">
-    <div class="col-md-6 login-info">
-<h1>Zaloguj się</h1>
+    <div class="col-md-4 login-info">
+
         {% load static %}
-            <img class="img-responsive mx-auto d-block" src="{% static 'sky.jpg' %}" alt="Login page background" width = "300">
+            <img class="img-responsive" src="{% static 'undraw_secure_login_pdn4.svg' %}" alt="Login page background" width="400">
 
     </div>
-    <div class="col-md-6 login-input">
+    <div class="col-md-8  mx-auto d-block col-md-offset-2 login-input">
     <form method="post">
         {% csrf_token %}{{form|crispy}}
         <p>Nie masz jeszcze konta? <a href="/signup">Zarejestruj się!</a></p>

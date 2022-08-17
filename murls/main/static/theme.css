@@ -1,5 +1,7 @@
 body{
 background-color: rgb(255, 236, 179);
+font-family: 'Rubik', sans-serif;
+
 }
 
 .navbar{
@@ -19,6 +21,7 @@ float: right;
 width: 300px;
 }
 
-.add-profiles-form{
-
+.login-input{
+    border: 5px solid orange;
+    border-radius: 15px;
 }
