@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, AddProfile
+from .forms import RegisterForm, AddProfile, AddBiogram
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ProfileLink
+from .models import ProfileLink, ProfileBiogram
 from django.http import HttpResponse
 
 # Create your views here.
@@ -48,10 +48,27 @@ def add_link(request):
 
     return render(request, 'main/add_profile.html', {"form": form})
 
+@login_required(login_url='/login')
+def add_biogram(request):
+    if request.method == 'POST':
+        form = AddBiogram(request.POST)
+        if form.is_valid():
+            link = form.save(commit=False)
+            link.owner = request.user
+            link.save()
+            return redirect("/home")
+    else:
+        form = AddBiogram()
+
+    return render(request, 'main/biogram.html', {"form": form})
+
 
 def ShowProfilePage(request, username):
         user_login = User.objects.get(username=username)
         user_n = User.objects.filter(username=username).first()
         user_id = user_n.id
         user_links = ProfileLink.objects.filter(owner=user_id)
-        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links})
+        user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
+
+        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
+                                                          "user_bio": user_bio})

@@ -3,21 +3,18 @@
 {% block content %}
 <h1>Zaloguj się</h1>
 <div class="container login-form">
-  <div class="row justify-content-center">
-    <div class="col-md-4 login-info">
-
-        {% load static %}
-            <img class="img-responsive" src="{% static 'undraw_secure_login_pdn4.svg' %}" alt="Login page background" width="400">
-
-    </div>
-    <div class="col-md-8  mx-auto d-block col-md-offset-2 login-input">
-    <form method="post">
-        {% csrf_token %}{{form|crispy}}
-        <p>Nie masz jeszcze konta? <a href="/signup">Zarejestruj się!</a></p>
-        <button type="submit" class="btn btn-success">Zaloguj</button>
-    </form>
+  <div class="row">
+      <div class="col-md-6">
+            {% load static %}
+            <img class="img-responsive" src="{% static 'undraw_secure_login_pdn4.png' %}" alt="Login page background" width="400">
+      </div>
+      <div class="col-md-6">
+            <form method="post">
+            {% csrf_token %}{{form|crispy}}
+            <p>Nie masz jeszcze konta? <a href="/signup">Zarejestruj się!</a></p>
+            <button type="submit" class="btn btn-success">Zaloguj</button>
+            </form>
+      </div>
     </div>
   </div>
-</div>
-
 {% endblock %}

@@ -1,7 +1,12 @@
 body{
-background-color: rgb(255, 236, 179);
+background-color: rgb(238, 238, 238);
 font-family: 'Rubik', sans-serif;
 
+}
+
+a{
+    text-decoration:none;
+    color: black;
 }
 
 .navbar{
@@ -22,6 +27,10 @@ width: 300px;
 }
 
 .login-input{
-    border: 5px solid orange;
-    border-radius: 15px;
+background-color : orange;
+height: 350px;
+width: 350px;
+}
+
+.social-share{
 }

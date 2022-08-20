@@ -6,5 +6,6 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('signup', views.sign_up, name='signup'),
     path('add-profile', views.add_link, name='addlink'),
+    path('add-biogram', views.add_biogram, name='biogram'),
     path('@<str:username>/', views.ShowProfilePage, name='ShowProfilePage'),
 ]

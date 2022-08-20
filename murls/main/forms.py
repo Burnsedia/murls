@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import ProfileLink
+from .models import ProfileLink, ProfileBiogram
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -17,7 +18,6 @@ class RegisterForm(UserCreationForm):
         max_length=150,
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
-
 
     password1 = forms.CharField(
         label='Hasło',
@@ -35,6 +35,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
+
 class AddProfile(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,6 +52,22 @@ class AddProfile(forms.ModelForm):
         max_length=200,
         error_messages={'required': 'Please let us know what to call you!'}
     )
+
     class Meta:
         model = ProfileLink
         fields = ["application", "link"]
+
+
+class AddBiogram(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['biogram'].widget.attrs.update({'class': 'form-control custom-input'})
+
+    biogram = forms.CharField(
+        label='Bio',
+        max_length=400,
+    )
+
+    class Meta:
+        model = ProfileBiogram
+        fields = ["biogram"]
