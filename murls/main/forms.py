@@ -66,7 +66,7 @@ class AddBiogram(forms.ModelForm):
     biogram = forms.CharField(
         label='Opis profilu...',
         max_length=500,
-        #widget=forms.TextInput(attrs={'value': ProfileBiogram.objects.filter(owner_id=biogram_owner_id).last()})
+        widget=forms.Textarea()
     )
     class Meta:
         model = ProfileBiogram
