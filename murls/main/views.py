@@ -50,15 +50,20 @@ def add_link(request):
 
 @login_required(login_url='/login')
 def add_biogram(request):
+    initial_dict = {
+        "biogram": ProfileBiogram.objects.filter(owner_id=request.user.id).last()
+    }
+
     if request.method == 'POST':
-        form = AddBiogram(request.POST)
+        form = AddBiogram(request.POST or None, initial=initial_dict)
         if form.is_valid():
             link = form.save(commit=False)
             link.owner = request.user
             link.save()
+
             return redirect("/home")
     else:
-        form = AddBiogram()
+        form = AddBiogram(initial=initial_dict)
 
     return render(request, 'main/biogram.html', {"form": form})
 

@@ -13,3 +13,6 @@ class ProfileLink(models.Model):
 class ProfileBiogram(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     biogram = models.CharField(max_length=350, verbose_name='Opis...', null=True)
+
+    def __str__(self):
+        return self.biogram

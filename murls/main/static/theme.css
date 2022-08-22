@@ -14,6 +14,10 @@ padding-right: 15vh;
 padding-left: 25px;
 }
 
+.asteriskField {
+    display: none;
+}
+
 .content{
 padding-top: 5vh;
 }

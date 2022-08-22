@@ -1,10 +1,10 @@
-{% extends 'main/base.html' %}
+    {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="container">
+<div class="container mt-2">
     {% if user_links|length > 0 %}
-    <h1 class="text-center">{{ user_login }}</h1>
+    <h1 class="text-center">@{{ user_login }}</h1>
     {% endif %}
     <div class="biogram text-center">
             {{ user_bio.biogram }}
@@ -21,25 +21,12 @@
     </div>
         </div>
 </div>
-        {% if user.is_authenticated %}
-        <div class="social-share mt-5">
-            <h2 class="text-center">Udostępnij swój profil! </h2>
-               {% load social_share %}
-        {% post_to_facebook "http://127.0.0.1:8000/home" "Udostępnij na Facebooku "  %}
-        {% post_to_twitter "Sprawdź wszystkie moje profile! " request_path "Udostępnij na Twitterze" %}
-        {% copy_to_clipboard request_path "Kopiuj do bio" %}
-        {% add_copy_script %}
-        {% endif %}
-        </div>
 {% endfor %}
 
     {% if user_links|length < 1 %}
-    <h2 class="text-center">@{{ user_login }} nie dodał jeszcze żadnych kont</h2>
+    <div class="no-links mt-5">
+    <h2 class="text-center">@{{ user_login }} nie ma jeszcze dodanych kont</h2>
     {% endif %}
-
-
-
-</div>
     </div>
-
+</div>
 {% endblock %}

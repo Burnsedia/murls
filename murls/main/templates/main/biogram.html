@@ -2,15 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container-fluid d-flex aligns-items-center justify-content-center">
-    <div class>
+    <div class="set-biogram mt-5">
         <h2 class="text-center">Dodaj swój biogram </h2>
-            <form method="post">
+        <div class="biogram-input mt-5">
+             <form method="post">
             {% csrf_token %}{{form|crispy}}
             <br>
                 <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-success text-center">Zapisz </button>
                 </div>
             </form>
+        </div>
+
     </div>
 </div>
 

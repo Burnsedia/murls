@@ -64,10 +64,10 @@ class AddBiogram(forms.ModelForm):
         self.fields['biogram'].widget.attrs.update({'class': 'form-control custom-input'})
 
     biogram = forms.CharField(
-        label='Bio',
-        max_length=400,
+        label='Opis profilu...',
+        max_length=500,
+        #widget=forms.TextInput(attrs={'value': ProfileBiogram.objects.filter(owner_id=biogram_owner_id).last()})
     )
-
     class Meta:
         model = ProfileBiogram
         fields = ["biogram"]
