@@ -3,11 +3,17 @@
 {% block content %}
 
 <div class="container mt-2">
+    <div class="avatar text-center">
+        {% if user_bio.avatar|length > 0 %}
+            <img class="rounded-circle mx-auto d-block" src="{{ user_bio.avatar.url }}" width="150">
+        {% endif %}
+    </div>
     {% if user_links|length > 0 %}
     <h1 class="text-center">@{{ user_login }}</h1>
     {% endif %}
-    <div class="biogram text-center">
-            {{ user_bio.biogram }}
+
+    <div class="biogram mt-4 text-center">
+        {{ user_bio.biogram }}
     </div>
 
     {% for link in user_links %}

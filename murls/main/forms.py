@@ -68,6 +68,7 @@ class AddBiogram(forms.ModelForm):
         max_length=500,
         widget=forms.Textarea()
     )
+
     class Meta:
         model = ProfileBiogram
-        fields = ["biogram"]
+        fields = ["biogram", "avatar"]

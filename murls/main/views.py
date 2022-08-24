@@ -55,7 +55,7 @@ def add_biogram(request):
     }
 
     if request.method == 'POST':
-        form = AddBiogram(request.POST or None, initial=initial_dict)
+        form = AddBiogram(request.POST or None, request.FILES, initial=initial_dict)
         if form.is_valid():
             link = form.save(commit=False)
             link.owner = request.user
@@ -68,6 +68,7 @@ def add_biogram(request):
     return render(request, 'main/biogram.html', {"form": form})
 
 
+
 def ShowProfilePage(request, username):
         user_login = User.objects.get(username=username)
         user_n = User.objects.filter(username=username).first()
@@ -77,3 +78,4 @@ def ShowProfilePage(request, username):
 
         return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
                                                           "user_bio": user_bio})
+
