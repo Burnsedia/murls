@@ -6,8 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .models import ProfileLink, ProfileBiogram, Avatar
 from django.http import HttpResponse
 
-# Create your views here.
-
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)
 
@@ -81,8 +79,6 @@ def add_avatar(request):
 
     return render(request, 'main/avatar.html', {"form": form})
 
-
-
 def ShowProfilePage(request, username):
         user_login = User.objects.get(username=username)
         user_n = User.objects.filter(username=username).first()
@@ -93,9 +89,3 @@ def ShowProfilePage(request, username):
 
         return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
                                                           "user_bio": user_bio, "user_avatar": user_avatar})
-
-# def ShowProfileAvatar(request, username):
-#         avatar = ProfileAvatar.objects.filter(owner_id=user_id).last()
-#
-#         return render(request, 'main/')
-#
