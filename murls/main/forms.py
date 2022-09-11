@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import ProfileLink, ProfileBiogram
+from .models import ProfileLink, ProfileBiogram, Avatar
 
 
 class RegisterForm(UserCreationForm):
@@ -71,4 +71,12 @@ class AddBiogram(forms.ModelForm):
 
     class Meta:
         model = ProfileBiogram
-        fields = ["biogram", "avatar"]
+        fields = ["biogram"]
+
+class AddAvatar(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args,*kwargs)
+
+    class Meta:
+            model = Avatar
+            fields = ["avatar"]

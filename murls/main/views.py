@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, AddProfile, AddBiogram
+from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ProfileLink, ProfileBiogram
+from .models import ProfileLink, ProfileBiogram, Avatar
 from django.http import HttpResponse
 
 # Create your views here.
@@ -67,6 +67,20 @@ def add_biogram(request):
 
     return render(request, 'main/biogram.html', {"form": form})
 
+def add_avatar(request):
+    if request.method == 'POST':
+        form = AddAvatar(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.save()
+            return redirect("/home")
+    else:
+        form = AddAvatar()
+
+
+    return render(request, 'main/avatar.html', {"form": form})
+
 
 
 def ShowProfilePage(request, username):
@@ -75,7 +89,13 @@ def ShowProfilePage(request, username):
         user_id = user_n.id
         user_links = ProfileLink.objects.filter(owner=user_id)
         user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
+        user_avatar = Avatar.objects.filter(user=user_id).last()
 
         return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
-                                                          "user_bio": user_bio})
+                                                          "user_bio": user_bio, "user_avatar": user_avatar})
 
+# def ShowProfileAvatar(request, username):
+#         avatar = ProfileAvatar.objects.filter(owner_id=user_id).last()
+#
+#         return render(request, 'main/')
+#

@@ -11,7 +11,11 @@ class ProfileLink(models.Model):
 class ProfileBiogram(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     biogram = models.CharField(max_length=350, verbose_name='Opis...', null=True)
-    avatar = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True, null=True, verbose_name='Zdjęcie profilowe')
-
     def __str__(self):
         return self.biogram
+
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True, null=True, verbose_name="Twoj avatar")
+
+

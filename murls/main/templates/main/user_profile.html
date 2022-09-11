@@ -4,8 +4,8 @@
 
 <div class="container mt-2">
     <div class="avatar text-center">
-        {% if user_bio.avatar|length > 0 %}
-            <img class="rounded-circle mx-auto d-block" src="{{ user_bio.avatar.url }}" width="150">
+        {% if user_avatar.avatar|length > 0 %}
+            <img class="rounded-circle mx-auto d-block" src="{{ user_avatar.avatar.url }}" width="150">
         {% endif %}
     </div>
     {% if user_links|length > 0 %}
