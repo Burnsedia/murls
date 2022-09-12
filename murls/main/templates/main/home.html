@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<!--<h1>Dzień dobry, {{user}}</h1>-->
+
 {% if links|length > 0 %}
 <h3>Twoje konta:</h3>
 {% else %}
@@ -10,10 +10,9 @@
         {% load static %}
         <img class="img-responsive mx-auto d-block" src="{% static 'undraw_no_data_re_kwbl.svg' %}" alt="No data image" width="350"><br>
         <h2 class="text-center">Na razie nic tutaj nie ma. Kliknij przycisk i dodaj pierwszy link!</h2><br><br>
-    <div class="d-flex justify-content-center">
-            <a class="btn btn-info btn-lg" href="/add-profile" role="button">Dodaj link</a>
-    </div>
-
+        <div class="d-flex justify-content-center">
+                <a class="btn btn-info btn-lg" href="/add-profile" role="button">Dodaj link</a>
+        </div>
 </div>
 
 {% endif %}
@@ -34,9 +33,6 @@
     </div>
 </div>
 {% endfor %}
-
 {% endif %}
-
-
 {% endblock %}
 

@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar
+from django.contrib.auth.views import LoginView
+from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ProfileLink, ProfileBiogram, Avatar
 from django.http import HttpResponse
+
+class CustomLoginView(LoginView):
+    authentication_form = CustomAuthenticationForm
+def my_custom_page_not_found_view(request, exception):
+    return render(request, "main/errors/404.html", {})
 
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)

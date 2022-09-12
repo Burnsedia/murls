@@ -28,11 +28,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home">Murls</a>
                     </li>
-                    {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    {% endif %}
+
                 </ul>
             </div>
         </div>
@@ -40,7 +36,11 @@
          <div class="navbar-nav ml-auto">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-<!--                   <a class="nav-link my-sm-0" href="/logout">Logout</a>-->
+                {% if not user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                                {% endif %}
                           {% if user.is_authenticated %}
                            <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">

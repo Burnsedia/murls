@@ -36,5 +36,10 @@ height: 350px;
 width: 350px;
 }
 
+.avatar-image{
+    display: block;
+    border: 4px solid orange;
+}
+
 .social-share{
 }
