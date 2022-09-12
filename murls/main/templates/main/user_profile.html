@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="container mt-2">
+<div class="container mt-2 justify-content-center">
     <div class="avatar text-center">
         {% if user_avatar.avatar|length > 0 %}
             <img class="rounded-circle mx-auto d-block avatar-image" src="{{ user_avatar.avatar.url }}" width="150">
@@ -15,24 +15,23 @@
     <div class="biogram mt-4 text-center">
         {{ user_bio.biogram }}
     </div>
-
+</div>
     {% for link in user_links %}
-    <div class="container-fluid d-flex aligns-items-center">
-        <div class="card mt-3 animate__animated animate__bounceInLeft" style="width: 18rem;">
+    <div class="card mt-3 animate__animated animate__bounceInLeft mx-auto" style="width: 18rem;">
     <div class="card-header">
         {{link.application}}
     </div>
     <div class="card-body">
         <a href="{{link.link}}" target="_blank">{{link.link}}</a>
     </div>
-        </div>
-</div>
-{% endfor %}
+    </div>
+    {% endfor %}
+
+
 
     {% if user_links|length < 1 %}
     <div class="no-links mt-5">
     <h2 class="text-center">@{{ user_login }} nie ma jeszcze dodanych kont</h2>
     {% endif %}
     </div>
-</div>
 {% endblock %}

@@ -7,11 +7,11 @@ from .models import ProfileLink, ProfileBiogram, Avatar
 class CustomAuthenticationForm(AuthenticationForm):
     username = UsernameField(
         label='Użytkownik',
-        widget=forms.TextInput(attrs={'autofocus': True})
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     password = forms.CharField(
         label='Hasło',
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
 class RegisterForm(UserCreationForm):
