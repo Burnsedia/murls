@@ -12,6 +12,9 @@ class CustomLoginView(LoginView):
 def my_custom_page_not_found_view(request, exception):
     return render(request, "main/errors/404.html", {})
 
+def landing(request):
+    return render(request, 'main/landing.html')
+
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)
 
@@ -72,18 +75,19 @@ def add_biogram(request):
     return render(request, 'main/biogram.html', {"form": form})
 
 def add_avatar(request):
+    user_avatar = Avatar.objects.filter(user=request.user.id).last()
     if request.method == 'POST':
         form = AddAvatar(request.POST, request.FILES)
+
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
             form.save()
-            return redirect("/home")
+            return redirect("/add-avatar")
     else:
         form = AddAvatar()
 
-
-    return render(request, 'main/avatar.html', {"form": form})
+    return render(request, 'main/avatar.html', {"form": form, "user_avatar": user_avatar})
 
 def ShowProfilePage(request, username):
         user_login = User.objects.get(username=username)

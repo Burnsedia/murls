@@ -7,7 +7,8 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    #path('', views.home, name='home'),
+    path('', views.landing, name='landing'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('home', views.home, name='home'),
     path('signup', views.sign_up, name='signup'),

@@ -16,6 +16,6 @@ class ProfileBiogram(models.Model):
 
 class Avatar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True, null=True, verbose_name="Twoj avatar")
+    avatar = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True, null=True, verbose_name="Wgraj zdjęcie")
 
 
