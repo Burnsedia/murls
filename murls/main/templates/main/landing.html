@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {# Load the tag library #}
+    {% load bootstrap5 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'theme.css'%}">
+    <title>MURLS - all links in one place</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+            <div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Murls</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+         <div class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                {% if not user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Logowanie</a>
+                                </li>
+                                {% endif %}
+                          {% if user.is_authenticated %}
+                           <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+                            {{user}}
+                          </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="/@{{user}}">Mój profil</a></li>
+                                <li><a class="dropdown-item" href="/add-profile">Dodaj konta</a></li>
+                                <li><a class="dropdown-item" href="/add-biogram">Edytuj biogram</a></li>
+                                <li><a class="dropdown-item" href="/add-avatar">Edytuj avatar</a></li>
+                                <li><a class="dropdown-item" href="/">Edytuj konta</a></li>
+                                <li><a class="dropdown-item" href="/logout">Wyloguj</a></li>
+                            </ul>
+                          {% endif %}
+                </div>
+                </li>
+            </ul>
+        </div>
+</nav>
+    <section id="section1">
+        <div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 animate__animated animate__fadeInLeft">
+      <h1 class="text-center">MURLS to platforma do dzielenia się swoimi kontami w mediach społecznościowych</h1>
+      <p class="text-center">Jeden adres do wszystkich Twoich kont.</p>
+    </div>
+    <div class="col-md-6 animate__animated animate__fadeInRight">
+      <img class="img-responsive" src="{% static 'undraw_social_expert_re_elbp.svg' %}" alt="Social media image" width="400">
+    </div>
+  </div>
+</div>
+    </section>
+    <section id="section2">
+        <div class="container mt-5">
+            <div class="row">
+                <h2 class="text-center">Lorem ipsum... </h2>
+
+            </div>
+        </div>
+    </section>
+<section id="section3">
+    <div class="container mt-4 animate__animated animate__bounceInUp animate__delay-1s">
+            <h2 class="text-center">FAQ</h2>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Dlaczego warto?
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse toggle" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Jeden link = wiele korzyści</strong> Zainteresuj swoich odbiorców jednym kliknięciem!
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Czy założenie konta jest płatne?
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Założenie konta i jego użytkowanie jest całkowicie darmowe!</strong>  Nie pobieramy żadnych opłat od użytkowników. <br>Obecnie nie posiadamy kont premium.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Czego nie można dodawać na profilu?
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Nasz serwis powstał, aby umożliwić udostępnianie kont w mediach społecznościowych takich jak m.in. Instagram, Facebook, TikTok, itd. Nie blokujemy kont, ale możemy usunąć link, który narusza nasz regulamin.
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        Czy można dodać kilka linków do jednej karty?
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Obecnie do jednej karty można przypiąć tylko jeden link.
+      </div>
+    </div>
+  </div>
+</div>
+
+        </div>
+</section>
+</body>
+<footer class="mt-5">
+    <p class="text-center">Copyright MURLS 2022</p>
+</footer>
+</html>
