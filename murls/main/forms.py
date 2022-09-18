@@ -5,6 +5,10 @@ from django.shortcuts import render
 from .models import ProfileLink, ProfileBiogram, Avatar
 
 class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        self.error_messages['invalid_login'] = 'Błędne dane. Spróbuj jeszcze raz.'
+        super().__init__(*args, **kwargs)
+
     username = UsernameField(
         label='Użytkownik',
         widget=forms.TextInput(attrs={'class': 'form-control'})
@@ -13,6 +17,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         label='Hasło',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
