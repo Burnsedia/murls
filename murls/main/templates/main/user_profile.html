@@ -13,13 +13,13 @@
     {% endif %}
 
     <div class="biogram mt-4 text-center">
-        {{ user_bio.biogram }}
+        {{ user_bio.biogram | linebreaks}}
     </div>
 </div>
     {% for link in user_links %}
     <div class="card mt-3 animate__animated animate__bounceInLeft mx-auto" style="width: 18rem;">
     <div class="card-header">
-        {{link.application}}
+        <a href="{{link.link}}" target="_blank">{{link.application}}</a>
     </div>
     <div class="card-body">
         <a href="{{link.link}}" target="_blank">{{link.link}}</a>
