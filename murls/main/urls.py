@@ -16,6 +16,7 @@ urlpatterns = [
     path('add-biogram', views.add_biogram, name='biogram'),
     path('add-avatar', views.add_avatar, name='avatar'),
     path('@<str:username>/', views.ShowProfilePage, name='ShowProfilePage'),
+    path('activate/<uidb64>/<token>', views.activate, name='activate'),
 ]
 
 

@@ -1,11 +1,18 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView
-from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm
 from .models import ProfileLink, ProfileBiogram, Avatar
-from django.http import HttpResponse
+from .token import account_activation_token
+
 
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
@@ -27,13 +34,49 @@ def home(request):
 
     return render(request, 'main/home.html', {"links": links})
 
+def activateEmail(request, user, to_email):
+    mail_subject = 'Activate your user account.'
+    message = render_to_string('registration/activate_account.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        messages.success(request, f'{user}, zaloguj się na swoją pocztę {to_email} i kliknij \
+            otrzymany link aktywacyjny, aby potwierdzić rejestrację. Jeżeli nie widzisz maila, sprawdź folder spam lub inne.')
+    else:
+        messages.error(request, f'Problem podczas wysyłania maila na {to_email}. Sprawdź poprawność adresu e-mail')
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(request, 'Zweryfikowaliśmy Twój adres, teraz możesz się zalogować.')
+        return redirect('/login')
+    else:
+        messages.error(request, 'Błąd aktywacji')
+
+    return redirect('/home')
 
 def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            activateEmail(request, user, form.cleaned_data.get('email'))
+
             return redirect('/home')
     else:
         form = RegisterForm()
@@ -41,6 +84,7 @@ def sign_up(request):
     return render(request, 'registration/signup.html', {"form": form})
 
 
+...
 @login_required(login_url='/login')
 def add_link(request):
     if request.method == 'POST':

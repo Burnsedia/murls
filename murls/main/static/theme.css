@@ -39,6 +39,8 @@ width: 350px;
 .avatar-image{
     display: block;
     border: 4px solid orange;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
 }
 
 .social-share{
