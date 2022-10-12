@@ -16,11 +16,15 @@ from .token import account_activation_token
 
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
+
+
 def my_custom_page_not_found_view(request, exception):
     return render(request, "main/errors/404.html", {})
 
+
 def landing(request):
     return render(request, 'main/landing.html')
+
 
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)
@@ -34,7 +38,8 @@ def home(request):
 
     return render(request, 'main/home.html', {"links": links})
 
-def activateEmail(request, user, to_email):
+
+def activate_email(request, user, to_email):
     mail_subject = 'Activate your user account.'
     message = render_to_string('registration/activate_account.html', {
         'user': user.username,
@@ -45,10 +50,12 @@ def activateEmail(request, user, to_email):
     })
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        messages.success(request, f'{user}, zaloguj się na swoją pocztę {to_email} i kliknij \
-            otrzymany link aktywacyjny, aby potwierdzić rejestrację. Jeżeli nie widzisz maila, sprawdź folder spam lub inne.')
+        messages.success(request, f'{user}, zaloguj się na swoją pocztę {to_email} i kliknij  otrzymany link '
+                                  f'aktywacyjny, aby potwierdzić rejestrację. Jeżeli nie widzisz maila, '
+                                  f'sprawdź folder spam lub inne.')
     else:
         messages.error(request, f'Problem podczas wysyłania maila na {to_email}. Sprawdź poprawność adresu e-mail')
+
 
 def activate(request, uidb64, token):
     try:
@@ -68,6 +75,7 @@ def activate(request, uidb64, token):
 
     return redirect('/home')
 
+
 def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -75,7 +83,7 @@ def sign_up(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            activateEmail(request, user, form.cleaned_data.get('email'))
+            activate_email(request, user, form.cleaned_data.get('email'))
 
             return redirect('/home')
     else:
@@ -85,6 +93,8 @@ def sign_up(request):
 
 
 ...
+
+
 @login_required(login_url='/login')
 def add_link(request):
     if request.method == 'POST':
@@ -98,6 +108,7 @@ def add_link(request):
         form = AddProfile()
 
     return render(request, 'main/add_profile.html', {"form": form})
+
 
 @login_required(login_url='/login')
 def add_biogram(request):
@@ -118,6 +129,7 @@ def add_biogram(request):
 
     return render(request, 'main/biogram.html', {"form": form})
 
+
 def add_avatar(request):
     user_avatar = Avatar.objects.filter(user=request.user.id).last()
     if request.method == 'POST':
@@ -133,13 +145,14 @@ def add_avatar(request):
 
     return render(request, 'main/avatar.html', {"form": form, "user_avatar": user_avatar})
 
-def ShowProfilePage(request, username):
-        user_login = User.objects.get(username=username)
-        user_n = User.objects.filter(username=username).first()
-        user_id = user_n.id
-        user_links = ProfileLink.objects.filter(owner=user_id)
-        user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
-        user_avatar = Avatar.objects.filter(user=user_id).last()
 
-        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
-                                                          "user_bio": user_bio, "user_avatar": user_avatar})
+def show_profile_page(request, username):
+    user_login = User.objects.get(username=username)
+    user_n = User.objects.filter(username=username).first()
+    user_id = user_n.id
+    user_links = ProfileLink.objects.filter(owner=user_id)
+    user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
+    user_avatar = Avatar.objects.filter(user=user_id).last()
+
+    return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
+                                                      "user_bio": user_bio, "user_avatar": user_avatar})
