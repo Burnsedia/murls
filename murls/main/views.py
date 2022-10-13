@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm
 from .models import ProfileLink, ProfileBiogram, Avatar
@@ -147,12 +148,15 @@ def add_avatar(request):
 
 
 def show_profile_page(request, username):
-    user_login = User.objects.get(username=username)
-    user_n = User.objects.filter(username=username).first()
-    user_id = user_n.id
-    user_links = ProfileLink.objects.filter(owner=user_id)
-    user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
-    user_avatar = Avatar.objects.filter(user=user_id).last()
+    try:
+        user_login = User.objects.get(username=username)
+        user_n = User.objects.filter(username=username).first()
+        user_id = user_n.id
+        user_links = ProfileLink.objects.filter(owner=user_id)
+        user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
+        user_avatar = Avatar.objects.filter(user=user_id).last()
 
-    return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
-                                                      "user_bio": user_bio, "user_avatar": user_avatar})
+        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
+                                                          "user_bio": user_bio, "user_avatar": user_avatar})
+    except ObjectDoesNotExist:
+        return render(request, 'main/user_not_exist.html', {"username": username})

@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<div class="user_not_found text-center mt-4 animate__animated animate__headShake">
+    <h2>Użytkownik @{{username}} nie istnieje. </h2>
+    <p>Zarejestruj się i zarezerwuj ten nick! &#128521;</p>
+    <a href="/signup"><button class="btn btn-primary">Zarejestruj się </button></a>
+</div>
+{% endblock %}
