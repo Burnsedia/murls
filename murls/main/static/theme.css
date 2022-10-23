@@ -38,10 +38,41 @@ width: 350px;
 
 .avatar-image{
     display: block;
-    border: 4px solid orange;
-    background: rgb(63,94,251);
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    border: 4px solid transparent;
+    border-radius: 20px;
+    background:
+    linear-gradient(to right, white, white),
+    linear-gradient(to right, red , blue);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
 }
 
-.social-share{
-}
+.user_card a{
+ align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 2px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 48px;
+  min-width: 200px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  font-family: 'Raleway', sans-serif;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  }

@@ -17,14 +17,22 @@
     </div>
 </div>
     {% for link in user_links %}
-    <div class="card mt-3 animate__animated animate__bounceInLeft mx-auto" style="width: 18rem;">
-    <div class="card-header">
-        <a href="{{link.link}}" target="_blank">{{link.application}}</a>
+<!--    <div class="card mt-3 animate__animated animate__bounceInLeft mx-auto" style="width: 18rem;">-->
+<!--    <div class="card-header">-->
+<!--        <a href="{{link.link}}" target="_blank">{{link.application}}</a>-->
+<!--    </div>-->
+<!--    <div class="card-body">-->
+<!--        <a href="{{link.link}}" target="_blank">{{link.link}}</a>-->
+<!--    </div>-->
+<!--    </div>-->
+    <div class="text-center">
+            <div class="cards mt-3 animate__animated animate__bounceInLeft mx-auto" style="width: 18rem;">
+            <div class="user_card">
+                <a href="{{link.link}}" target="_blank">{{link.application}}</a>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <a href="{{link.link}}" target="_blank">{{link.link}}</a>
-    </div>
-    </div>
+
     {% endfor %}
 
     {% if user_links|length < 1 %}
