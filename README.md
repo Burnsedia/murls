@@ -3,6 +3,8 @@
 
 A simple platform to share your social media accounts as a single link
 
+Try on : https://murls.pythonanywhere.com/
+
 ## Tech Stack
 - Python
 - Django
