@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
+from PIL import Image
 
 class ProfileLink(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -17,5 +16,11 @@ class ProfileBiogram(models.Model):
 class Avatar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True, null=True, verbose_name="Wgraj zdjęcie")
+    def save(self, *args, **kwargs):
+        super(Avatar, self).save()
+        img = Image.open(self.avatar.path)
 
-
+        if img.height > 500 or img.width > 500:
+            output_size = (400,400)
+            img.thumbnail(output_size)
+            img.save(self.avatar.path)
