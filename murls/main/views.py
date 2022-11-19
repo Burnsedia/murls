@@ -18,9 +18,8 @@ from .token import account_activation_token
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
 
-
-def my_custom_page_not_found_view(request, exception):
-    return render(request, "main/errors/404.html", {})
+def page_not_foundf_view(request, exception):
+    return render(request, 'errors/404.html', status=404)
 
 
 def landing(request):
@@ -130,7 +129,7 @@ def add_biogram(request):
 
     return render(request, 'main/biogram.html', {"form": form})
 
-
+@login_required(login_url='/login')
 def add_avatar(request):
     user_avatar = Avatar.objects.filter(user=request.user.id).last()
     if request.method == 'POST':
