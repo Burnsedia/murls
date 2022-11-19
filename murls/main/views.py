@@ -18,13 +18,8 @@ from .token import account_activation_token
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
 
-def page_not_foundf_view(request, exception):
-    return render(request, 'errors/404.html', status=404)
-
-
 def landing(request):
     return render(request, 'main/landing.html')
-
 
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)
@@ -90,10 +85,6 @@ def sign_up(request):
         form = RegisterForm()
 
     return render(request, 'registration/signup.html', {"form": form})
-
-
-...
-
 
 @login_required(login_url='/login')
 def add_link(request):
