@@ -14,7 +14,6 @@ from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthen
 from .models import ProfileLink, ProfileBiogram, Avatar
 from .token import account_activation_token
 
-
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
 
