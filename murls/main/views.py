@@ -14,11 +14,18 @@ from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthen
 from .models import ProfileLink, ProfileBiogram, Avatar
 from .token import account_activation_token
 
+
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
 
+
+def my_custom_page_not_found_view(request, exception):
+    return render(request, "main/errors/404.html", {})
+
+
 def landing(request):
     return render(request, 'main/landing.html')
+
 
 def home(request):
     links = ProfileLink.objects.filter(owner=request.user.id)
@@ -85,6 +92,10 @@ def sign_up(request):
 
     return render(request, 'registration/signup.html', {"form": form})
 
+
+...
+
+
 @login_required(login_url='/login')
 def add_link(request):
     if request.method == 'POST':
@@ -119,7 +130,7 @@ def add_biogram(request):
 
     return render(request, 'main/biogram.html', {"form": form})
 
-@login_required(login_url='/login')
+
 def add_avatar(request):
     user_avatar = Avatar.objects.filter(user=request.user.id).last()
     if request.method == 'POST':
