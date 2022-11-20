@@ -23,4 +23,5 @@ class Avatar(models.Model):
         if img.height > 500 or img.width > 500:
             output_size = (400,400)
             img.thumbnail(output_size)
-            img.save(self.avatar.path)
+            exif = img.getexif()
+            img.save(self.avatar.path, exif=exif)
