@@ -24,8 +24,4 @@ class Avatar(models.Model):
             output_size = (400,400)
             img.thumbnail(output_size)
             exif = img.getexif()
-<<<<<<< HEAD
             img.save(self.avatar.path, exif=exif)
-=======
-            img.save(self.avatar.path, exif=exif)
->>>>>>> add-image-resizing
