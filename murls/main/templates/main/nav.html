@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ms-auto ">
+       <li class="nav-item">
+                        {% if not user.is_authenticated %}
+                        <a class="nav-link" href="/">Murls</a>
+                        {% else %}
+                        <a class="nav-link" href="/home">Murls</a>
+                        {% endif %}
+                    </li>
+      <li class="nav-item dropdown">
+        {% if not user.is_authenticated %}
+        <a class="nav-link mx-2 dropdown-toggle" href="/login" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Logowanie
+        </a>
+        {% endif %}
+          {% if  user.is_authenticated %}
+          <a class="nav-link mx-2 dropdown-toggle" href="/login" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{user}}
+        </a>
+          {% endif %}
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="/@{{user}}">Mój profil</a></li>
+            <li><a class="dropdown-item" href="/add-profile">Dodaj konta</a></li>
+            <li><a class="dropdown-item" href="/add-biogram">Edytuj biogram</a></li>
+            <li><a class="dropdown-item" href="/add-avatar">Edytuj avatar</a></li>
+            <li><a class="dropdown-item" href="/home">Edytuj konta</a></li>
+            <li><a class="dropdown-item" href="/logout">Wyloguj</a></li>
+        </ul>
+      </li>
+    </ul>
+      {% endif %}
+  </div>
+</div>
+</nav>
