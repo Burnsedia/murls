@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from PIL import Image
 import datetime
 
+
+
 class ProfileLink(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     application = models.CharField(max_length=150, verbose_name=u"Aplikacja")
