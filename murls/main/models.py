@@ -21,7 +21,6 @@ def user_avatars_directory(Avatar, filename):
     date_object = datetime.date.today()
     return "users/{}/{}/{}".format(Avatar.user, date_object, Avatar.avatar)
 
-
 class Avatar(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to=user_avatars_directory, blank=True, null=True, verbose_name="Wgraj zdjęcie")
