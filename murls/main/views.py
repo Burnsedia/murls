@@ -156,7 +156,15 @@ def show_profile_page(request, username):
         user_bio = ProfileBiogram.objects.filter(owner_id=user_id).last()
         user_avatar = Avatar.objects.filter(user=user_id).last()
 
-        return render(request, 'main/user_profile.html', {"user_login": user_login, "user_links": user_links,
-                                                          "user_bio": user_bio, "user_avatar": user_avatar})
+        context = dict(
+            user_login=user_login,
+            user_n=user_n,
+            user_id=user_id,
+            user_links=user_links,
+            user_bio=user_bio,
+            user_avatar=user_avatar
+        )
+
+        return render(request, 'main/user_profile.html', context=context)
     except ObjectDoesNotExist:
         return render(request, 'main/user_not_exist.html', {"username": username})
