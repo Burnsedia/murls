@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from PIL import Image
 import datetime
 
@@ -34,3 +35,10 @@ class Avatar(models.Model):
             img.thumbnail(output_size)
             exif = img.getexif()
             img.save(self.avatar.path, exif=exif, quality=80)
+
+class TwoFactorAuth(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    state = models.BooleanField(default=False, blank=True)
+
+    def __str__(self):
+        return str(self.state)

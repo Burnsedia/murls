@@ -10,8 +10,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.exceptions import ObjectDoesNotExist
 
-from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm
-from .models import ProfileLink, ProfileBiogram, Avatar
+from .forms import RegisterForm, AddProfile, AddBiogram, AddAvatar, CustomAuthenticationForm, TwoFactorAuthForm
+from .models import ProfileLink, ProfileBiogram, Avatar, TwoFactorAuth
 from .token import account_activation_token
 
 
@@ -38,6 +38,28 @@ def home(request):
             link.delete()
 
     return render(request, 'main/home.html', {"links": links})
+
+
+@login_required(login_url='/login')
+def settings(request):
+    if request.method == 'POST':
+        form = TwoFactorAuthForm(request.POST)
+        if form.is_valid():
+            state = form.save(commit=False)
+            state.user = request.user
+            form.save()
+
+            return redirect("/settings")
+    else:
+        form = TwoFactorAuthForm()
+
+    auth_state = TwoFactorAuth.objects.filter(user=request.user.id).last()
+
+    context = dict(
+        form=form,
+        auth_state=auth_state
+    )
+    return render(request, 'main/settings.html', context=context)
 
 
 def activate_email(request, user, to_email):
@@ -78,6 +100,8 @@ def activate(request, uidb64, token):
 
 
 def sign_up(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():

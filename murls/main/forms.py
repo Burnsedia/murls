@@ -2,8 +2,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 from django.contrib.auth.models import User
 from django.core.validators import EmailValidator
+from django.forms import CheckboxInput
 from django.shortcuts import render
-from .models import ProfileLink, ProfileBiogram, Avatar
+from .models import ProfileLink, ProfileBiogram, Avatar, TwoFactorAuth
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -55,7 +57,7 @@ class RegisterForm(UserCreationForm):
         error_messages = {
             'username': {
                 'unique': 'Your Custom Error Message here !!!',
-            },}
+            }, }
 
 
 class AddProfile(forms.ModelForm):
@@ -95,10 +97,25 @@ class AddBiogram(forms.ModelForm):
         model = ProfileBiogram
         fields = ["biogram"]
 
+
 class AddAvatar(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-            super().__init__(*args,*kwargs)
+        super().__init__(*args, *kwargs)
 
     class Meta:
-            model = Avatar
-            fields = ["avatar"]
+        model = Avatar
+        fields = ["avatar"]
+
+
+class TwoFactorAuthForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['state'].widget.attrs.update({'class': 'form-check-label', 'id': '2fa-checkbox'})
+
+    state = forms.BooleanField(
+        label='Logowanie dwuskładnikowe (2FA)',
+        required=False,
+    )
+    class Meta:
+        model = TwoFactorAuth
+        fields = ["state"]

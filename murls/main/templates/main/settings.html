@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load qr_code %}
+{% block content %}
+<div class="container">
+<div class="row">
+  <h2>Ustawienia </h2>
+</div>
+<div class="account-settings mt-5">
+  <div class="row">
+    <div class="col-md-9">
+        <h3>Twoje dane: </h3>
+        <div class="user-settings-details mt-4">
+            <p><b>Nazwa użytkownika: </b>{{ user.username }}</p>
+        <p><b>E-mail: </b>{{ user.email }}</p>
+        </div>
+</div>
+<div class="col-md-3">
+             <h2>Ustawienia 2FA</h2>
+<form method = "POST" id="2fa_settings">
+    {% csrf_token %}{{form|crispy}}
+    <div class="form-check form-switch"></div>
+    <input type = "submit" value = "Zapisz" class="btn btn-success">
+</form>
+    <div class="qr-code mt-4">
+        {% if auth_state %}
+<!--        {{ auth_state }}-->
+        {% endif %}
+    </div>
+</div>
+  </div>
+</div>
+</div>
+
+
+<script>
+
+var auth_state = "{{ auth_state}}";
+
+if (auth_state == 'True') {
+    document.getElementById("2fa-checkbox").checked = true;
+}
+else {
+    document.getElementById("2fa-checkbox").checked = false;
+}
+</script>
+{% endblock %}
