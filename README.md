@@ -49,7 +49,7 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-#Setup database'
+Setup database
 
 ```bash
 python manage.py makemigrations
