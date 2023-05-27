@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap5',
     'django_social_share',
-    'qr_code'
 ]
 
 MIDDLEWARE = [
