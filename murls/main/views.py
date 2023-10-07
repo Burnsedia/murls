@@ -93,6 +93,8 @@ def activate(request, uidb64, token):
 
         messages.success(request, 'Zweryfikowaliśmy Twój adres, teraz możesz się zalogować.')
         return redirect('/login')
+    elif user.is_active == True:
+        messages.error(request, 'Twoje konto zostało już wcześniej aktywowane.')
     else:
         messages.error(request, 'Błąd aktywacji')
 
