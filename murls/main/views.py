@@ -140,9 +140,15 @@ def add_avatar(request):
         form = AddAvatar(request.POST, request.FILES)
 
         if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.save()
+            avatar_instance = form.save(commit=False)
+
+            if not avatar_instance.avatar:
+
+                form.add_error('avatar', 'Brak avatara do wgrania!')
+                return render(request, 'main/avatar.html', {"form": form, "user_avatar": user_avatar})
+
+            avatar_instance.user = request.user
+            avatar_instance.save()
             return redirect("/add-avatar")
     else:
         form = AddAvatar()
