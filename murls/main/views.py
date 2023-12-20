@@ -39,29 +39,6 @@ def home(request):
 
     return render(request, 'main/home.html', {"links": links})
 
-
-@login_required(login_url='/login')
-def settings(request):
-    if request.method == 'POST':
-        form = TwoFactorAuthForm(request.POST)
-        if form.is_valid():
-            state = form.save(commit=False)
-            state.user = request.user
-            form.save()
-
-            return redirect("/settings")
-    else:
-        form = TwoFactorAuthForm()
-
-    auth_state = TwoFactorAuth.objects.filter(user=request.user.id).last()
-
-    context = dict(
-        form=form,
-        auth_state=auth_state
-    )
-    return render(request, 'main/settings.html', context=context)
-
-
 def activate_email(request, user, to_email):
     mail_subject = 'Activate your user account.'
     message = render_to_string('registration/activate_account.html', {

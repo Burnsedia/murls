@@ -11,7 +11,6 @@ urlpatterns = [
     path('', views.landing, name='landing'),
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('home', views.home, name='home'),
-    path('settings', views.settings, name='settings'),
     path('signup', views.sign_up, name='signup'),
     path('add-profile', views.add_link, name='addlink'),
     path('add-biogram', views.add_biogram, name='biogram'),
