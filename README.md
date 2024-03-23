@@ -49,6 +49,27 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
+Create file to store environment variables
+
+```bash
+cd murls
+```
+
+Make file
+```bash
+.env
+```
+
+Generate secret key
+```bash 
+python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+```
+
+Copy output to .env file and save
+```bash
+export SECRET_KEY=[output from previous command]
+```
+
 Setup database
 
 ```bash
